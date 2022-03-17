@@ -8,6 +8,9 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
 from pyspark.sql.types import BooleanType, StringType
 
+from logging.handlers import TimedRotatingFileHandler
+from logging import Formatter
+
 
 def load_data(path, is_header):
     data = spark.read.option("header", is_header) \
@@ -32,6 +35,12 @@ def list_filter(df, given_list, colname):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
+
+    handler = TimedRotatingFileHandler(filename='logs/runtime.log', when='D', interval=1, backupCount=90, encoding='utf-8',
+                                       delay=False)
+    formatter = Formatter(fmt='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
     logger.info("1 - INFO - Libraries imported")
 

@@ -1,0 +1,19 @@
+language: python
+jdk: openjdk8
+dist: trusty
+sudo: false
+cache:
+  pip: true
+python:
+  - "3.7"
+before_install:
+  - mkdir -p /opt
+  - wget -q -O /opt/spark.tgz http://www.gtlib.gatech.edu/pub/apache/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2.tgz
+  - tar xzf /opt/spark.tgz -C /opt/
+  - rm /opt/spark.tgz
+  - export SPARK_HOME=/opt/spark-3.2.1-bin-hadoop3.2
+  - export PATH=$PATH:/opt/spark-3.2.1-bin-hadoop3.2/bin
+install:
+  - pip install -r requirements.txt
+script:
+  - pytest

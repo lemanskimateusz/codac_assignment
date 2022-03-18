@@ -112,6 +112,7 @@ if __name__ == "__main__":
 
     # dropping personal info
     client_data = client_data.drop("first_name", "last_name", "country")
+
     logger.debug("4 - DEBUG - Client data schema after dropping personal columns")
     logger.debug(client_data.printSchema())
 
